@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "pdfkit": "^0.15.2"
+  },
+  "devDependencies": {
+    "@types/pdfkit": "^0.13.8",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/pdf-writer.js"
+  }
+}
