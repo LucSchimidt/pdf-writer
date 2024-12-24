@@ -29,18 +29,17 @@ interface URL {
   ip_address: string;
   created_at: string;
 }
+
 interface Historico {
   datetime: string;
   url: URL;
 }
 
 
-
-
-
 class GenerateReport {
   private doc: PDFKit.PDFDocument;
 
+    //Classe para geração da capa e definição do arquivo PDF.
     constructor(filePath: string, id:string, title:string, responsable:string) {
         this.doc = new PDFDocument();
         const writeStream = fs.createWriteStream(filePath);
@@ -95,6 +94,7 @@ class GenerateReport {
         this.doc.image('./assets/logo.png', smallXPosition, yPosition, { fit: [125, 125], align: 'center', valign:'bottom'});
     }
 
+    //Gera a página de introdução do relatório:
     introductionPage() {
       const content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt arcu at ligula ullamcorper, eget egestas dui ullamcorper. Integer vulputate sapien at bibendum vehicula. Nulla facilisi. Mauris egestas, ipsum ac interdum iaculis, neque lorem vulputate arcu, ac consequat elit justo sit amet purus. Curabitur vehicula auctor ligula, eu viverra odio posuere ac. Curabitur id lorem in libero placerat scelerisque non sit amet neque. Morbi interdum dui eu mauris aliquam, at aliquet justo sodales. Quisque faucibus tempor turpis, sit amet egestas orci vestibulum ac. Vivamus fermentum libero et sem condimentum, sed rhoncus velit vestibulum. Integer feugiat sollicitudin ligula, et tincidunt ligula placerat et. Donec eget est nec sapien euismod convallis id sed augue. Nullam varius purus eget dui gravida, non rutrum purus facilisis. Vivamus ut ligula hendrerit, aliquam dui non, auctor orci. Sed consectetur justo quis bibendum convallis. Aenean eget erat venenatis, euismod purus vitae, tincidunt orci. Ut feugiat, orci nec tincidunt feugiat, nulla dolor convallis velit, sed vehicula est enim a ligula. Aenean auctor ipsum sapien, eu euismod felis auctor nec. Sed fermentum, magna vitae fermentum pretium, enim felis laoreet enim, sit amet mollis purus felis ac purus. Quisque pretium, lectus a laoreet finibus, urna lorem efficitur nulla, euismod dictum purus sapien sed est. Sed tempor massa nisi, at convallis elit sodales at. Aliquam a felis vitae dolor dapibus tempus. Donec fermentum bibendum massa, ac malesuada lacus viverra ut. Etiam cursus orci in nulla rutrum, ac fringilla risus tincidunt. Nunc tincidunt orci sed arcu tincidunt facilisis. In eget lectus felis. Nam in nunc dolor. Ut suscipit, lorem eu euismod volutpat, mi erat tincidunt sem, eget placerat magna augue eu erat. Fusce aliquet, sem non lobortis efficitur, ante dui elementum tortor, ac luctus purus felis sit amet arcu. Donec et dui sed odio maximus gravida et a sapien. Vestibulum ac magna arcu. Aliquam erat volutpat. Nullam dignissim, nisi vel facilisis gravida, dui nulla efficitur nulla, sed sollicitudin nulla ante et dui. Donec tristique libero sed sapien lobortis, et iaculis neque finibus. Aliquam erat volutpat. Cras feugiat viverra risus, ac tincidunt sapien aliquet eu. Mauris vel nisi vitae eros iaculis lacinia. Mauris rutrum urna risus, id tempus eros efficitur ut. Phasellus congue vestibulum ante et consectetur. Fusce efficitur auctor eros id pharetra. Ut vehicula suscipit mauris ac tempor. Aliquam erat volutpat. Nam dapibus cursus urna, eu vestibulum orci tempor sed."
     
@@ -117,6 +117,7 @@ class GenerateReport {
 
     }
 
+    //Gera a página de certificados, QR Code e código:
     certificationPage(qrcode_path: string, code:string) {
       this.doc.addPage();
 
@@ -166,6 +167,7 @@ class GenerateReport {
       this.doc.image('./assets/logo.png', xPosition, yPosition, { fit: [125, 125], align: 'center', valign:'bottom'});
     }
 
+    //Gera a página de detalhes de registro:
     registerDetails(id:string, start_date:string, end_date:string, session_time:number, utf:string, ambiente:string, packages:Package[]) {
       this.doc.addPage();
 
@@ -255,6 +257,7 @@ class GenerateReport {
       this.doc.image('./assets/logo.png', xPosition, yPosition, { fit: [125, 125], align: 'center', valign:'bottom'});
     }
 
+    //Cada addImage() gera uma página com uma imagem somente e os seus detalhes.
     addImage(image:Imagem) {
       this.doc.addPage({ layout: 'landscape' });
       
@@ -273,6 +276,7 @@ class GenerateReport {
       this.doc.image('./assets/logo.png', xPosition, yPosition, { fit: [125, 125], align: 'center', valign:'bottom'});
     }
 
+    //Gera a página com os detalhes dos vídeos e das URL's acessadas:
     videoAndHistoryDetails(videos:Video[], historico:Historico[]) {
       this.doc.addPage({layout:'portrait'})
 
@@ -344,6 +348,7 @@ class GenerateReport {
       this.doc.image('./assets/logo.png', xPosition, yPosition, { fit: [125, 125], align: 'center', valign:'bottom'});
     }
 
+    //!Método essencial para gerar o arquivo PDF.
     generate() {
       this.doc.end();
       console.log('PDF gerado com sucesso!');
@@ -351,32 +356,31 @@ class GenerateReport {
 }
   
 
-//EXECUÇÃO DO PDF:
+//EXEMPLO DE EXECUÇÃO DO PDF:
 
-const meu_relatorio = new GenerateReport('./relatorio.pdf', '090503', 'Relatório de organização dos periféricos', 'Lucas L. Schimidt'); //Construtor
-meu_relatorio.introductionPage() //Página da introdução
-meu_relatorio.certificationPage('./assets/qr_code.png','193j1e98u12eh1982u3912dh1') //Página do qrCode e identificador
+// const meu_relatorio = new GenerateReport('./relatorio.pdf', '090503', 'Relatório de organização dos periféricos', 'Lucas L. Schimidt'); //Construtor
+// meu_relatorio.introductionPage() //Página da introdução
+// meu_relatorio.certificationPage('./assets/qr_code.png','193j1e98u12eh1982u3912dh1') //Página do qrCode e identificador
 
-const pacote_um:Package = {
-  archive_name: 'capture_6711396f6336070c.zip',
-  size: 13.74,
-  type: 'Conteúdos capturados',
-  hash: ['09a8sdasnd12uh3jasd', 'asjsi45645uhuh9283190823']
-} 
-meu_relatorio.registerDetails('90123j1209ujed182ji123', '2024-04-03', '2024-04-07', 200, '(UTC-03:00) Brasilia','WEBSITE - Ponto(s) de acesso à internet: 45.170.27.220',[pacote_um])
+// const pacote_um:Package = {
+//   archive_name: 'capture_6711396f6336070c.zip',
+//   size: 13.74,
+//   type: 'Conteúdos capturados',
+//   hash: ['09a8sdasnd12uh3jasd', 'asjsi45645uhuh9283190823']
+// } 
+// meu_relatorio.registerDetails('90123j1209ujed182ji123', '2024-04-03', '2024-04-07', 200, '(UTC-03:00) Brasilia','WEBSITE - Ponto(s) de acesso à internet: 45.170.27.220',[pacote_um])
 
-const imagem_um:Imagem = {archive_name: 'minha_imagem.png', path: './assets/captura.png', date: '2024-12-24', origin: 'desktop'}
-meu_relatorio.addImage(imagem_um)
+// const imagem_um:Imagem = {archive_name: 'minha_imagem.png', path: './assets/captura.png', date: '2024-12-24', origin: 'desktop'}
+// meu_relatorio.addImage(imagem_um)
 
-const video_um:Video = {archive_name: 'meu_video.mp4', hash: '1928321hsd1hge129873ghdjhga', start_time:'00:00:00', end_time:'00:25:52', duration: 300}
-const video_dois:Video = {archive_name: 'meu_video_2.mp4', hash: '1928321hsdasd1hge129873ghdjhga', start_time:'00:00:00', end_time:'00:03:11', duration: 300}
+// const video_um:Video = {archive_name: 'meu_video.mp4', hash: '1928321hsd1hge129873ghdjhga', start_time:'00:00:00', end_time:'00:25:52', duration: 300}
+// const video_dois:Video = {archive_name: 'meu_video_2.mp4', hash: '1928321hsdasd1hge129873ghdjhga', start_time:'00:00:00', end_time:'00:03:11', duration: 300}
 
-const historico_um:Historico = {url: {link: 'https://google.com', created_at: '2008-05-10', ip_address:'192.168.0.0', owner:'Google'}, datetime: '2024-12-24 00:00:00'}
-const historico_dois:Historico = {url: {link: 'https://google.com', created_at: '2008-05-10', ip_address:'192.168.0.0', owner:'Google'}, datetime: '2024-12-24 00:00:00'}
-const historico_tres:Historico = {url: {link: 'https://google.com', created_at: '2008-05-10', ip_address:'192.168.0.0', owner:'Google'}, datetime: '2024-12-24 00:00:00'}
+// const historico_um:Historico = {url: {link: 'https://google.com', created_at: '2008-05-10', ip_address:'192.168.0.0', owner:'Google'}, datetime: '2024-12-24 00:00:00'}
+// const historico_dois:Historico = {url: {link: 'https://google.com', created_at: '2008-05-10', ip_address:'192.168.0.0', owner:'Google'}, datetime: '2024-12-24 00:00:00'}
+// const historico_tres:Historico = {url: {link: 'https://google.com', created_at: '2008-05-10', ip_address:'192.168.0.0', owner:'Google'}, datetime: '2024-12-24 00:00:00'}
+// const historico:Historico[] = [historico_um, historico_dois, historico_tres]
 
-const historico:Historico[] = [historico_um, historico_dois, historico_tres]
+// meu_relatorio.videoAndHistoryDetails([video_um, video_dois], historico)
 
-meu_relatorio.videoAndHistoryDetails([video_um, video_dois], historico)
-
-meu_relatorio.generate()
+// meu_relatorio.generate()
