@@ -1,0 +1,15 @@
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  roots: [
+    "<rootDir>/tests"
+  ],
+  moduleDirectories: ['node_modules', 'src'], // Adicione 'src' para resolver módulos diretamente
+  moduleNameMapper: {
+    "^@src/(.*)$": "<rootDir>/src/$1" // Mapeia importações para permitir caminhos baseados em 'src'
+  },
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "/dist/"
+  ]
+};

@@ -1,13 +1,30 @@
 {
+  "name": "@j-m-servicos-de-informatica/realdoc-lib-pdfwriter",
+  "version": "1.0.0",
+  "description": "LIB para gerar o PDF de resposta da aplicação",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "pdfkit": "^0.15.2"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
     "@types/pdfkit": "^0.13.8",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.7.2"
   },
   "scripts": {
     "build": "tsc",
+    "test": "jest",
     "start": "node dist/pdf-writer.js"
-  }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "files": [
+    "dist/**/*",
+    "assets/**/*"
+  ]
 }
