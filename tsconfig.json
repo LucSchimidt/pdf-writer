@@ -1,23 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "strict": true,
-    "outDir": "./dist", // Especifica o diretório de saída para os arquivos compilados
-    "rootDir": "./src", // Especifica o diretório de entrada dos arquivos TypeScript
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "removeComments": false
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "tests", // Exclui a pasta de testes da compilação
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ]
-}
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "CommonJS",
+      "strict": true,
+      "outDir": "./dist",
+      "esModuleInterop": true
+    },
+    "include": ["src/**/*"]
+  }
+  
